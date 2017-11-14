@@ -1,0 +1,119 @@
+= Parrot-REST API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[[overview]]
+= Overview
+
+[[overview-http-verbs]]
+== HTTP verbs
+
+Parrot-REST application is a simple application that exposes to RESTs endpoints. One POST endpoint to listen and remember REST calls. The second endpoint is intended to talk or reproduce what was posted in the listen phase. . This application might be interesting in semi-integrated testing environments.
+
+|===
+| Verb | Usage
+
+| `GET`
+| Used to retrieve a resource
+
+| `POST`
+| Used to create a new resource
+|===
+
+Parrot-REST tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP status codes.
+
+|===
+| Status code | Usage
+
+| `200 OK`
+| The request completed successfully
+
+| `201 Created`
+| A new resource has been created successfully. The resource's URI is available from the response's
+`Location` header
+
+| `204 No Content`
+| An update to an existing resource has been applied successfully
+
+| `400 Bad Request`
+| The request was malformed. The response body will include an error providing further information
+
+| `404 Not Found`
+| The requested resource did not exist
+|===
+
+[[resources]]
+== Resources
+
+[[resources-health]]
+== Health
+
+The health provides the ability to validate that the parrot is up and running.
+
+[[resources-health-access]]
+=== Accessing the listen
+
+A `GET` request is used to access the health
+
+=== Example response
+
+include::{snippets}/health-example/http-response.adoc[]
+
+=== Example request
+
+include::{snippets}/health-example/http-request.adoc[]
+
+=== CURL request
+
+include::{snippets}/health-example/curl-request.adoc[]
+
+[[resources-listen]]
+== Listen
+
+The listen provides the ability to create responses that can be retrieved by the talk resource.
+
+[[resources-listen-access]]
+=== Accessing the listen
+
+A `GET` request is used to access the listen
+
+=== Example response
+
+include::{snippets}/listen-example/http-response.adoc[]
+
+=== Example request
+
+include::{snippets}/listen-example/http-request.adoc[]
+
+=== CURL request
+
+include::{snippets}/listen-example/curl-request.adoc[]
+
+
+
+[[resources-talk]]
+== Talk
+
+The talk provides the ability to echo responses that can be posted by the listen resource.
+
+[[resources-talk-access]]
+=== Accessing the talk
+
+A `POST` request is used to access the talk
+
+=== Example response
+
+include::{snippets}/talk-example/http-response.adoc[]
+
+=== Example request
+
+include::{snippets}/talk-example/http-request.adoc[]
+
+=== CURL request
+
+include::{snippets}/talk-example/curl-request.adoc[]
