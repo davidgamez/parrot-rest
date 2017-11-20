@@ -1,4 +1,4 @@
-- [Build Status] (https://circleci.com/gh/:owner/:repo.png?circle-token=:circle-token)
+[![Build Status](http://circleci-badges-max.herokuapp.com/img/:owner/:repo/:branch)](https://circleci.com/gh/:owner/:repo/tree/:branch)
 
 # Parrot REST
 
