@@ -2,7 +2,6 @@
 
  - [ ] Code local build green
  - [ ] Reasonable unit and integration tests added
- - [ ] 
 
 ##What kind of change does this PR introduce?
 - [ ] Bugfix
