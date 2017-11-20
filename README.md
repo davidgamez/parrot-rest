@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/davidgamez/parrot-rest.svg?style=svg)](https://circleci.com/gh/davidgamez/parrot-rest)
+ [![CircleCI](https://circleci.com/gh/davidgamez/parrot-rest.svg?style=svg)](https://circleci.com/gh/davidgamez/parrot-rest)
 
 # Parrot REST
 
