@@ -30,4 +30,5 @@ public class ListenControllerTest {
 		
 		verify(phraseService, times(1)).save(phrase);
 	}
+
 }

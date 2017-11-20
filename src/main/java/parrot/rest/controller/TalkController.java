@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.HandlerMapping;
 
+import parrot.rest.exception.UrlNotFoundException;
 import parrot.rest.service.PhraseService;
-import parrot.rest.service.UrlNotFoundException;
 
 /**
  * 
@@ -44,9 +44,9 @@ public class TalkController {
 		logger.debug("Talking URL: {}", fullUrl);
 		String url = getAppContextUrl(fullUrl);
 		if (StringUtils.isEmpty(url)) {
-			throw new UrlNotFoundException();
+			throw new UrlNotFoundException(fullUrl);
 		}
-		return new ResponseEntity<String>(phraseService.getResponse(url), HttpStatus.OK);
+		return new ResponseEntity<>(phraseService.getResponse(url), HttpStatus.OK);
 	}
 
 	private String getAppContextUrl(String fullUrl) {
