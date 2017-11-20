@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>parrot-rest</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Parrot REST is a RestFul service exposes two main endpoints. One POST endpoint to listen and remember REST responses given an URL. The second endpoint is intended to talk or reproduce what was posted in the listening phase. This application might be interesting in semi-integrated testing environments.</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -30,7 +30,7 @@
 		<docker.image.name>parrot-rest</docker.image.name>
 		<asciidoctor-plugin.version>1.5.3</asciidoctor-plugin.version>
 		<snippetsDirectory>${project.build.directory}/snippets</snippetsDirectory>
-		<asciidoc.source.dir>docs/asciidocs</asciidoc.source.dir>
+		<asciidoc.source.dir>src/main/asciidocs</asciidoc.source.dir>
 		<asciidoc.output.dir>docs/release</asciidoc.output.dir>
 	</properties>
 	<dependencies>
