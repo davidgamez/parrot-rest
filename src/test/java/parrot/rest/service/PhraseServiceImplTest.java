@@ -17,6 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import parrot.rest.common.Phrase;
+import parrot.rest.exception.UrlNotFoundException;
 import parrot.rest.repository.PhraseRepository;
 
 /**

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import parrot.rest.common.Phrase;
+import parrot.rest.exception.UrlNotFoundException;
 import parrot.rest.repository.PhraseRepository;
 
 /**
@@ -34,7 +35,7 @@ public class PhraseServiceImpl implements PhraseService {
 	public String getResponse(String url) throws UrlNotFoundException {
 		Phrase result = phraseRepository.load(url);
 		if (result == null) {
-			throw new UrlNotFoundException();
+			throw new UrlNotFoundException(url);
 		}
 
 		return result.getResponse();

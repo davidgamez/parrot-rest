@@ -4,6 +4,7 @@
 package parrot.rest.service;
 
 import parrot.rest.common.Phrase;
+import parrot.rest.exception.UrlNotFoundException;
 
 /**
  * @author David Gamez
