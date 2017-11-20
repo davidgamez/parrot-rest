@@ -1,8 +1,9 @@
-package parrot.rest.docs;
+package parrot.rest;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.HashOperations;
@@ -11,6 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import parrot.rest.common.Phrase;
 import parrot.rest.repository.HashOperationsMock;
 
+@Configurable
 public class ApplicationTestConfiguration {
 
 	private HashOperations<String, Object, Object> opsHash;

@@ -31,6 +31,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import parrot.rest.ApplicationTestConfiguration;
 import parrot.rest.ParrotRestApplication;
 import parrot.rest.common.Phrase;
 

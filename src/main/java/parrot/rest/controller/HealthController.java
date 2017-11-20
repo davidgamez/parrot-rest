@@ -19,6 +19,6 @@ public class HealthController {
 	
 	@GetMapping
 	public ResponseEntity<String> listen() {
-		return new ResponseEntity<String>("I'm a healthy parrot, do you have a sunflower seeds for me?", HttpStatus.OK);
+		return new ResponseEntity<>("I'm a healthy parrot, do you have sunflower seeds for me?", HttpStatus.OK);
 	}
 }
