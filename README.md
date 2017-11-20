@@ -1,4 +1,4 @@
-[![Build Status](http://circleci-badges-max.herokuapp.com/img/:owner/:repo/:branch)](https://circleci.com/gh/:owner/:repo/tree/:branch)
+[![CircleCI](https://circleci.com/gh/davidgamez/parrot-rest.svg?style=svg)](https://circleci.com/gh/davidgamez/parrot-rest)
 
 # Parrot REST
 
