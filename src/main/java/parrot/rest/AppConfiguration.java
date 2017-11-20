@@ -6,6 +6,7 @@ package parrot.rest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -20,6 +21,7 @@ import redis.clients.jedis.JedisShardInfo;
  *
  */
 @Configuration
+@ConditionalOnProperty(name="persistent.type", havingValue = "REDIS")
 public class AppConfiguration {
 
 	private static final Logger logger = LoggerFactory.getLogger(TalkController.class);

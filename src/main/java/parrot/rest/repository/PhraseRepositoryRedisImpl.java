@@ -4,6 +4,7 @@
 package parrot.rest.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -15,8 +16,9 @@ import parrot.rest.common.Phrase;
  *
  */
 @Component
-public class PhraseRepositoryRedisImpl implements PhraseRepository {
-
+@ConditionalOnProperty(name="persistent.type", havingValue = "REDIS")
+public class PhraseRepositoryRedisImpl extends PhraseRepositoryBase {
+  
 	@Autowired
 	RedisTemplate<String, Phrase> redisTemplate;
 
@@ -30,13 +32,9 @@ public class PhraseRepositoryRedisImpl implements PhraseRepository {
 		return phrase;
 	}
 
-	public String getId(Phrase phrase) {
-		return String.format("%s/%s", phrase.getAppContext(), phrase.getUrl());
-	}
-
 	@Override
 	public Phrase load(String url) {
-		return (Phrase) getHashOps().get(Phrase.class.getName(), url);
+		return (Phrase) getHashOps().get(Phrase.class.getName(), getIdFromUrl(url));
 	}
 	
 
