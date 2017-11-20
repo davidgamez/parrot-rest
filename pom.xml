@@ -5,7 +5,7 @@
 
 	<groupId>parrot.rest</groupId>
 	<artifactId>parrot-rest</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>parrot-rest</name>
@@ -155,7 +155,7 @@
 							<!-- Sets the path to the file which contains the execution data. -->
 							<dataFile>${jacoco.ut.execution.data.file}</dataFile>
 							<!-- Sets the output directory for the code coverage report. -->
-							<outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+							<outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>							
 						</configuration>
 					</execution>
 					<!-- Prepares the property pointing to the JaCoCo runtime agent which 
