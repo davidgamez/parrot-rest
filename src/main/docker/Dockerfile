@@ -1,6 +1,7 @@
+ARG JAR_FILE
 FROM java:8-jdk
 VOLUME /tmp
-ADD parrot-rest-0.0.1-SNAPSHOT.jar app.jar
+ADD ${JAR_FILE} app.jar
 RUN sh -c 'touch /app.jar'
 EXPOSE 8080
 ENV JAVA_OPTS=""
