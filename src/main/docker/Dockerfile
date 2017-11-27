@@ -1,5 +1,5 @@
-ARG JAR_FILE
 FROM java:8-jdk
+ARG JAR_FILE
 VOLUME /tmp
 ADD ${JAR_FILE} app.jar
 RUN sh -c 'touch /app.jar'
