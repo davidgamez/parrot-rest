@@ -13,7 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.servlet.HandlerMapping;
-
+import static org.springframework.http.HttpMethod.GET;
 import parrot.rest.exception.UrlNotFoundException;
 import parrot.rest.service.PhraseService;
 
@@ -27,12 +27,12 @@ public class TalkControllerTest {
   PhraseService phraseService;
 
   @Test
-  public void testTalkExistingUrl() throws UrlNotFoundException {
+  public void testTalkExistingUrlGet() throws UrlNotFoundException {
     HttpServletRequest request = getMockRequest("talk/appContext/url");
 
     fixture.talk(request);
 
-    verify(phraseService, times(1)).getResponse("appContext/url");
+    verify(phraseService, times(1)).getResponse("appContext/url", GET);
   }
 
   @Test(expected = UrlNotFoundException.class)
@@ -47,7 +47,7 @@ public class TalkControllerTest {
   public void testTalkNotExistingUrl() throws UrlNotFoundException {
     HttpServletRequest request = getMockRequest("talk/appContext/url");
 
-    when(phraseService.getResponse("appContext/url")).thenThrow(UrlNotFoundException.class);
+    when(phraseService.getResponse("appContext/url", GET)).thenThrow(UrlNotFoundException.class);
     fixture.talk(request);
   }
 
@@ -56,7 +56,7 @@ public class TalkControllerTest {
   public void testTalkEmptyUrl() throws UrlNotFoundException {
     HttpServletRequest request = getMockRequest("");
 
-    when(phraseService.getResponse("appContext/url")).thenThrow(UrlNotFoundException.class);
+    when(phraseService.getResponse("appContext/url", GET)).thenThrow(UrlNotFoundException.class);
     fixture.talk(request);
   }
 

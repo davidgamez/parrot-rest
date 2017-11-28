@@ -5,6 +5,8 @@ package parrot.rest.common;
 
 import java.io.Serializable;
 
+import org.springframework.http.HttpMethod;
+
 /**
  * @author David Gamez
  *
@@ -16,6 +18,7 @@ public class Phrase implements Serializable {
 	private String appContext;
 	private String url;
 	private String response;
+	private HttpMethod httpMethod;
 
 	public String getUrl() {
 		return url;
@@ -36,9 +39,17 @@ public class Phrase implements Serializable {
 	public void setAppContext(String appContext) {
 		this.appContext = appContext;
 	}
+	public HttpMethod getHttpMethod() {
+		return httpMethod;
+	}
+	public void setHttpMethod(HttpMethod httpMethod) {
+		this.httpMethod = httpMethod;
+	}
+	
 	@Override
 	public String toString() {
-		return "Phrase [" + (appContext != null ? "appContext=" + appContext + ", " : "")
-				+ (url != null ? "url=" + url + ", " : "") + (response != null ? "response=" + response : "") + "]";
+		return "Phrase [appContext=" + appContext + ", url=" + url + ", response=" + response + ", httpMethod="
+				+ httpMethod + "]";
 	}
+	
 }

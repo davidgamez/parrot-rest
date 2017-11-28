@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.http.HttpMethod.GET;
 
 import parrot.rest.common.Phrase;
 import parrot.rest.exception.UrlNotFoundException;
@@ -30,42 +31,42 @@ public class PhraseServiceImplTest {
 	@Autowired
 	@InjectMocks
 	PhraseServiceImpl fixture;
-	
+
 	@Mock
 	PhraseRepository phraseRepo;
-	
+
 	@Test
 	public void testSave() {
 		Phrase phrase = mock(Phrase.class);
 
 		fixture.save(phrase);
-		
+
 		verify(phraseRepo, times(1)).save(phrase);
 	}
-	
+
 	@Test
 	public void testGetResponseExisting() throws UrlNotFoundException {
 		Phrase phrase = new Phrase();
 		phrase.setAppContext("appContext");
 		phrase.setResponse("response");
 		phrase.setUrl("url");
-		
+
 		String theFullUrl = "appContext/url";
-		
-		when(phraseRepo.load(theFullUrl)).thenReturn(phrase);
-		
-		String response = fixture.getResponse(theFullUrl);
-		
+
+		when(phraseRepo.load(theFullUrl, GET)).thenReturn(phrase);
+
+		String response = fixture.getResponse(theFullUrl, GET);
+
 		assertEquals(phrase.getResponse(), response);
 	}
-	
+
 	@Test(expected = UrlNotFoundException.class)
 	public void testGetResponseNotExisting() throws UrlNotFoundException {
 
 		String theFullUrl = "appContext/url";
-		
-		when(phraseRepo.load(theFullUrl)).thenReturn(null);
-		
-		fixture.getResponse(theFullUrl);
+
+		when(phraseRepo.load(theFullUrl, GET)).thenReturn(null);
+
+		fixture.getResponse(theFullUrl, GET);
 	}
 }

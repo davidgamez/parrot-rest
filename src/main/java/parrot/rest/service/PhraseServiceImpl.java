@@ -3,6 +3,7 @@
  */
 package parrot.rest.service;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +29,13 @@ public class PhraseServiceImpl implements PhraseService {
 		return phraseRepository.save(phrase);
 	}
 
+	
 	/* (non-Javadoc)
-	 * @see parrot.rest.repository.PhraseService#get(java.lang.String, java.lang.String)
+	 * @see parrot.rest.service.PhraseService#getResponse(java.lang.String, org.springframework.http.HttpMethod)
 	 */
 	@Override
-	public String getResponse(String url) throws UrlNotFoundException {
-		Phrase result = phraseRepository.load(url);
+	public String getResponse(String url, HttpMethod httpMethod) throws UrlNotFoundException {
+		Phrase result = phraseRepository.load(url, httpMethod);
 		if (result == null) {
 			throw new UrlNotFoundException(url);
 		}

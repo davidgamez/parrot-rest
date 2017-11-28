@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import static org.springframework.http.HttpMethod.GET;
 
 import parrot.rest.common.Phrase;
 
@@ -47,14 +48,14 @@ public class PhraseRepositoryRedisImplTest {
 		phrase.setAppContext("appTest");
 		phrase.setUrl("url");
 		
-		assertNull(fixture.load(fixture.getId(phrase)));
+		assertNull(fixture.load(fixture.getId(phrase), GET));
 		
 		fixture.save(phrase);
 		
 		assertNotNull(opsHash.get(Phrase.class.getName(), fixture.getId(phrase)));
 		assertEquals(phrase, opsHash.get(Phrase.class.getName(), fixture.getId(phrase)));
 		
-		assertEquals(phrase, fixture.load(fixture.getId(phrase)));
+		assertEquals(phrase, fixture.load(fixture.getId(phrase), GET));
 	}
 	
 }
