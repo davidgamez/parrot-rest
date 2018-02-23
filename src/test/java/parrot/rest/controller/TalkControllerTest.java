@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.web.servlet.HandlerMapping;
 
 import parrot.rest.exception.UrlNotFoundException;
 import parrot.rest.service.PhraseService;
@@ -28,7 +27,7 @@ public class TalkControllerTest {
 
   @Test
   public void testTalkExistingUrl() throws UrlNotFoundException {
-    HttpServletRequest request = getMockRequest("talk/appContext/url");
+    HttpServletRequest request = getMockRequest("talk/appContext/url", "");
 
     fixture.talk(request);
 
@@ -37,7 +36,7 @@ public class TalkControllerTest {
 
   @Test(expected = UrlNotFoundException.class)
   public void testTalkBadUrlRequest() throws UrlNotFoundException {
-    HttpServletRequest request = getMockRequest("talk");
+    HttpServletRequest request = getMockRequest("talk", "");
 
     fixture.talk(request);
   }
@@ -45,7 +44,7 @@ public class TalkControllerTest {
   @SuppressWarnings("unchecked")
   @Test(expected = UrlNotFoundException.class)
   public void testTalkNotExistingUrl() throws UrlNotFoundException {
-    HttpServletRequest request = getMockRequest("talk/appContext/url");
+    HttpServletRequest request = getMockRequest("talk/appContext/url", "");
 
     when(phraseService.getResponse("appContext/url")).thenThrow(UrlNotFoundException.class);
     fixture.talk(request);
@@ -54,15 +53,16 @@ public class TalkControllerTest {
   @SuppressWarnings("unchecked")
   @Test(expected = UrlNotFoundException.class)
   public void testTalkEmptyUrl() throws UrlNotFoundException {
-    HttpServletRequest request = getMockRequest("");
+    HttpServletRequest request = getMockRequest("", "");
 
     when(phraseService.getResponse("appContext/url")).thenThrow(UrlNotFoundException.class);
     fixture.talk(request);
   }
 
-  private HttpServletRequest getMockRequest(String url) {
+  private HttpServletRequest getMockRequest(String url, String parameters) {
     HttpServletRequest request = mock(HttpServletRequest.class);
-    when(request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE)).thenReturn(url);
+    when(request.getRequestURI()).thenReturn(url);
+    when(request.getQueryString()).thenReturn(parameters);
     return request;
   }
 }

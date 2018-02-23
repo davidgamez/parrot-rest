@@ -32,6 +32,6 @@ public class ListenController {
 	public ResponseEntity<String> listen(@RequestBody Phrase phrase) {
 		logger.debug("Listening to: {}", phrase);
 		phraseService.save(phrase);
-		return new ResponseEntity<String>("OK", HttpStatus.OK);
+		return new ResponseEntity<>("OK", HttpStatus.OK);
 	}
 }

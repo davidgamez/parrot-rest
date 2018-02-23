@@ -72,6 +72,28 @@ public class ListenTalkMapIT extends BaseIntegrationController {
     .andExpect(status().isOk())
   .andExpect(content().string(JSON_RESPONSE));    
   }
+
+  @Test
+  public void testListenTalkParameters() throws Exception {
+    
+    Phrase phrase = new Phrase();
+    phrase.setAppContext("app_context");
+    phrase.setUrl("the_url?param=true");
+    phrase.setResponse(JSON_RESPONSE);
+    
+    Gson gson = new Gson();
+    String json = gson.toJson(phrase);
+    
+//    Listen
+    mockMvc.perform(post("/listen").contentType(MediaType.APPLICATION_JSON).content(json))
+        .andExpect(status().isOk())
+      .andExpect(content().string("OK"));
+
+//    Talk
+    mockMvc.perform(get("/talk/app_context/the_url?param=true"))
+    .andExpect(status().isOk())
+  .andExpect(content().string(JSON_RESPONSE));    
+  }
   
   @Test
   public void testListenMissingUrl() throws Exception {
