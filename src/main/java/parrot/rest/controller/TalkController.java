@@ -39,16 +39,29 @@ public class TalkController {
 	@GetMapping("talk/**")
 	@ResponseBody
 	public ResponseEntity<String> talk(HttpServletRequest request) throws UrlNotFoundException {
-		String fullUrl = (String) request.getAttribute(
-		        HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+		String url = getFullUrl(request);
 		
-		logger.debug("Talking URL: {}", fullUrl);
-		String url = getAppContextUrl(fullUrl);
+		logger.debug("Talking URL: {}", url);
 		if (StringUtils.isEmpty(url)) {
-			throw new UrlNotFoundException(fullUrl);
+			throw new UrlNotFoundException(url);
 		}
 		return new ResponseEntity<>(phraseService.getResponse(url, GET), HttpStatus.OK);
 	}
+
+  private String getFullUrl(HttpServletRequest request) {
+    StringBuilder builder = new StringBuilder();
+    String fullUrl = (String)request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+    String url = getAppContextUrl(fullUrl);
+    if (url == null) {
+      return null;
+    }
+    builder.append(url);    
+    if (StringUtils.isNotEmpty(request.getQueryString())) {
+      builder.append("?");
+      builder.append(request.getQueryString());
+    }
+    return builder.toString();
+  }
 
 	private String getAppContextUrl(String fullUrl) {
 		Matcher matcher = URL_PATTERN.matcher(fullUrl);
