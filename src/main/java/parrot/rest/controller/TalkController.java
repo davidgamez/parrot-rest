@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.HandlerMapping;
 
 import parrot.rest.exception.UrlNotFoundException;
 import parrot.rest.service.PhraseService;
@@ -37,18 +38,23 @@ public class TalkController {
 	@GetMapping("talk/**")
 	@ResponseBody
 	public ResponseEntity<String> talk(HttpServletRequest request) throws UrlNotFoundException {
-		String fullUrl = getFullUrl(request);
+		String url = getFullUrl(request);
 		
-		logger.debug("Talking URL: {}", fullUrl);
-		String url = getAppContextUrl(fullUrl);
+		logger.debug("Talking URL: {}", url);
 		if (StringUtils.isEmpty(url)) {
-			throw new UrlNotFoundException(fullUrl);
+			throw new UrlNotFoundException(url);
 		}
 		return new ResponseEntity<>(phraseService.getResponse(url), HttpStatus.OK);
 	}
 
   private String getFullUrl(HttpServletRequest request) {
-    StringBuilder builder = new StringBuilder(request.getRequestURI());
+    StringBuilder builder = new StringBuilder();
+    String fullUrl = (String)request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+    String url = getAppContextUrl(fullUrl);
+    if (url == null) {
+      return null;
+    }
+    builder.append(url);    
     if (StringUtils.isNotEmpty(request.getQueryString())) {
       builder.append("?");
       builder.append(request.getQueryString());

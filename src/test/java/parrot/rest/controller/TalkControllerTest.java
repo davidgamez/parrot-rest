@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.web.servlet.HandlerMapping;
 
 import parrot.rest.exception.UrlNotFoundException;
 import parrot.rest.service.PhraseService;
@@ -61,7 +62,7 @@ public class TalkControllerTest {
 
   private HttpServletRequest getMockRequest(String url, String parameters) {
     HttpServletRequest request = mock(HttpServletRequest.class);
-    when(request.getRequestURI()).thenReturn(url);
+    when(request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE)).thenReturn(url);
     when(request.getQueryString()).thenReturn(parameters);
     return request;
   }
