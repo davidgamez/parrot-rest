@@ -37,5 +37,14 @@ public class PhraseRepositoryRedisImpl extends PhraseRepositoryBase {
 		return (Phrase) getHashOps().get(Phrase.class.getName(), getIdFromUrl(url));
 	}
 	
+	@Override
+	public Phrase delete(String url) {
+		Phrase result = load(url);
+		if (result != null) {
+			getHashOps().delete(Phrase.class.getName(), getIdFromUrl(url));
+		}
+		return result;
+	}
+	
 
 }

@@ -15,4 +15,6 @@ public interface PhraseRepository {
 	
 	Phrase load(String fullUrl);
 
+	Phrase delete(String fullUrl);
+	
 }

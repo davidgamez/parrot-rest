@@ -28,6 +28,7 @@ public class PhraseServiceImpl implements PhraseService {
 		return phraseRepository.save(phrase);
 	}
 
+		
 	/* (non-Javadoc)
 	 * @see parrot.rest.repository.PhraseService#get(java.lang.String, java.lang.String)
 	 */
@@ -39,5 +40,15 @@ public class PhraseServiceImpl implements PhraseService {
 		}
 
 		return result.getResponse();
+	}
+
+
+	@Override
+	public Phrase remove(String url) throws UrlNotFoundException {
+		Phrase result = phraseRepository.delete(url);
+		if (result == null) {
+			throw new UrlNotFoundException(url);
+		}
+		return result;
 	}
 }

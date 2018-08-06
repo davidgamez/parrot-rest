@@ -51,3 +51,6 @@ nbdist/
 .DS_Store
 **.swap
 ~          
+
+# Eclipse #
+/bin/

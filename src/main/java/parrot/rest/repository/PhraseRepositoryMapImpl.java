@@ -30,4 +30,9 @@ public class PhraseRepositoryMapImpl extends PhraseRepositoryBase {
     return map.get(getIdFromUrl(fullUrl));
   }
 
+  @Override
+  public Phrase delete(String fullUrl) {
+	  return map.remove(getIdFromUrl(fullUrl));
+  }
+  
 }
