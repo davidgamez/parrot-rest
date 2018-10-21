@@ -28,18 +28,18 @@ import parrot.rest.service.PhraseService;
 public class TalkController {
 
 	public static final String PATH = "talk";
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(TalkController.class);
 	private static final Pattern URL_PATTERN = Pattern.compile("\\/{0,1}talk\\/(.*)");
-	
+
 	@Autowired
 	private PhraseService phraseService;
-	
+
 	@GetMapping("talk/**")
 	@ResponseBody
 	public ResponseEntity<String> talk(HttpServletRequest request) throws UrlNotFoundException {
 		String url = getFullUrl(request);
-		
+
 		logger.debug("Talking URL: {}", url);
 		if (StringUtils.isEmpty(url)) {
 			throw new UrlNotFoundException(url);
@@ -47,20 +47,20 @@ public class TalkController {
 		return new ResponseEntity<>(phraseService.getResponse(url), HttpStatus.OK);
 	}
 
-  private String getFullUrl(HttpServletRequest request) {
-    StringBuilder builder = new StringBuilder();
-    String fullUrl = (String)request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
-    String url = getAppContextUrl(fullUrl);
-    if (url == null) {
-      return null;
-    }
-    builder.append(url);    
-    if (StringUtils.isNotEmpty(request.getQueryString())) {
-      builder.append("?");
-      builder.append(request.getQueryString());
-    }
-    return builder.toString();
-  }
+	private String getFullUrl(HttpServletRequest request) {
+		StringBuilder builder = new StringBuilder();
+		String fullUrl = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+		String url = getAppContextUrl(fullUrl);
+		if (url == null) {
+			return null;
+		}
+		builder.append(url);
+		if (StringUtils.isNotEmpty(request.getQueryString())) {
+			builder.append("?");
+			builder.append(request.getQueryString());
+		}
+		return builder.toString();
+	}
 
 	private String getAppContextUrl(String fullUrl) {
 		Matcher matcher = URL_PATTERN.matcher(fullUrl);
