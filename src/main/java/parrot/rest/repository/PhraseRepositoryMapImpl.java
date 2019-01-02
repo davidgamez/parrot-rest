@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import parrot.rest.common.Phrase;
 
 /**
+ * @author David Gamez, Isuru Weerasooriya
  *
  */
 @Component

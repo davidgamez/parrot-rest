@@ -6,7 +6,7 @@ package parrot.rest.repository;
 import parrot.rest.common.Phrase;
 
 /**
- * @author gamezd
+ * @author David Gamez, Isuru Weerasooriya
  *
  */
 public interface PhraseRepository {
