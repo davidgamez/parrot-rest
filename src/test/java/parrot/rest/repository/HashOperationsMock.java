@@ -38,7 +38,13 @@ public class HashOperationsMock implements HashOperations<String, Object, Object
 	
 	@Override
 	public Long delete(String key, Object... hashKeys) {
-		throw new UnsupportedOperationException("Unsupported method");
+		Map<Object, Object> valueMap = map.get(key);
+		if (valueMap != null) {
+			for (Object hashKey : hashKeys) {
+				valueMap.remove(hashKey);
+			}
+		}
+		return null;
 	}
 
 	@Override
