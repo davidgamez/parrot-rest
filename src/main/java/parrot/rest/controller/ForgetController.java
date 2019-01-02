@@ -33,7 +33,7 @@ public class ForgetController {
 	private PhraseService phraseService;
 
 	@DeleteMapping("forget/**")
-	public ResponseEntity<String> talk(HttpServletRequest request) {
+	public ResponseEntity<String> forget(HttpServletRequest request) {
 		ResponseEntity<String> result = null;
 		String url = PhraseUtility.getFullUrl(request, URL_PATTERN);
 
