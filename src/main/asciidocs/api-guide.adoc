@@ -22,6 +22,9 @@ Parrot-REST application is a simple application that exposes to RESTs endpoints.
 
 | `POST`
 | Used to create a new resource
+
+|`DELETE`
+| Used to delete a resource
 |===
 
 Parrot-REST tries to adhere as closely as possible to standard HTTP and REST conventions in its
@@ -117,3 +120,46 @@ include::{snippets}/talk-example/http-request.adoc[]
 === CURL request
 
 include::{snippets}/talk-example/curl-request.adoc[]
+
+[[resources-forget]]
+== Forget
+
+The forget provides the ability to remove existing responses which were posted by the listen resource.
+
+[[resources-forget-access]]
+== Accessing the forget
+
+A `DLETE` request is used to access the forget
+
+[[forget-existing-resource]]
+=== Forget an existing resource
+
+==== Example response
+
+include::{snippets}/forget-example/http-response.adoc[]
+
+==== Example request
+
+include::{snippets}/forget-example/http-request.adoc[]
+
+==== CURL request
+
+include::{snippets}/forget-example/curl-request.adoc[]
+
+[[forget-non-existing-resource]]
+=== Forget a non-existing resource
+
+==== Example response
+
+include::{snippets}/forget-non-existing-resource-example/http-response.adoc[]
+
+==== Example request
+
+include::{snippets}/forget-non-existing-resource-example/http-request.adoc[]
+
+==== CURL request
+
+include::{snippets}/forget-non-existing-resource-example/curl-request.adoc[]
+
+
+ 

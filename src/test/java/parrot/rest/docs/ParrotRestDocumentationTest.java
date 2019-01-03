@@ -106,7 +106,7 @@ public class ParrotRestDocumentationTest {
 	}
 
 	@Test
-	public void forgetPhaseDoesNotExistExample() throws Exception {
+	public void forgetNonExistingResourceExample() throws Exception {
 		this.mockMvc.perform(delete("/forget/appContext/pathDoesNotExist")).andExpect(status().isNoContent());
 	}
 
