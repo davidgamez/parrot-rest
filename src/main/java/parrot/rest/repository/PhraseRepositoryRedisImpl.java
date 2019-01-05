@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import parrot.rest.common.Phrase;
 
 /**
- * @author David Gamez
+ * @author David Gamez, Isuru Weerasooriya
  *
  */
 @Component
@@ -37,5 +37,13 @@ public class PhraseRepositoryRedisImpl extends PhraseRepositoryBase {
 		return (Phrase) getHashOps().get(Phrase.class.getName(), getIdFromUrl(url));
 	}
 	
-
+	@Override
+	public Phrase delete(String url) {
+		Phrase result = load(url);
+		if (result != null) {
+			getHashOps().delete(Phrase.class.getName(), getIdFromUrl(url));
+		}
+		return result;
+	}
+	
 }

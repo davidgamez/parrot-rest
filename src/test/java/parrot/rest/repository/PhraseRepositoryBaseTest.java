@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import parrot.rest.common.Phrase;
 
 /**
+ * @author David Gamez
  *
  */
 public class PhraseRepositoryBaseTest {

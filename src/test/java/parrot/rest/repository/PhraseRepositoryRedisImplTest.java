@@ -20,7 +20,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import parrot.rest.common.Phrase;
 
 /**
- * @author David Gamez
+ * @author David Gamez, Isuru Weerasooriy
  *
  */
 @RunWith(MockitoJUnitRunner.class)
@@ -55,6 +55,21 @@ public class PhraseRepositoryRedisImplTest {
 		assertEquals(phrase, opsHash.get(Phrase.class.getName(), fixture.getId(phrase)));
 		
 		assertEquals(phrase, fixture.load(fixture.getId(phrase)));
+	}
+	
+	@Test
+	public void testSaveDeleteLoad() {
+		Phrase phrase = new Phrase();
+		phrase.setAppContext("appTest");
+		phrase.setUrl("url");
+		
+		assertNull(fixture.load(fixture.getId(phrase)));
+		
+		fixture.save(phrase);
+		assertNotNull(opsHash.get(Phrase.class.getName(), fixture.getId(phrase)));
+		
+		fixture.delete("appTest/url");
+		assertNull(opsHash.get(Phrase.class.getName(), fixture.getId(phrase)));
 	}
 	
 }

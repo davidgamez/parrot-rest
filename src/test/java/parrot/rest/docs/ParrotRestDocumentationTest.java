@@ -1,6 +1,3 @@
-/**
- * 
- */
 package parrot.rest.docs;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -8,6 +5,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,7 +34,7 @@ import parrot.rest.ParrotRestApplication;
 import parrot.rest.common.Phrase;
 
 /**
- * @author David Gamez
+ * @author David Gamez, Isuru Weerasooriya
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -48,7 +46,7 @@ public class ParrotRestDocumentationTest {
 	public JUnitRestDocumentation restDoc = new JUnitRestDocumentation("target/snippets");
 
 	private static final String JSON_RESPONSE = "{\"id\": 1, \"name\": \"Test response\"}";
-	
+
 	private RestDocumentationResultHandler document;
 	private MockMvc mockMvc;
 
@@ -56,39 +54,65 @@ public class ParrotRestDocumentationTest {
 	private WebApplicationContext context;
 
 	@Autowired
-    private ObjectMapper objectMapper;
-	
+	private ObjectMapper objectMapper;
+
 	@Mock
 	JedisConnectionFactory JedisConnectionFactory;
+
+	private Phrase phrase = new Phrase();
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		this.document = document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()));
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).apply(documentationConfiguration(this.restDoc))
 				.alwaysDo(this.document).build();
+		
+		phrase.setAppContext("appContext");
+		phrase.setResponse(JSON_RESPONSE);
+		phrase.setUrl("path");
+
+		setupPhrase();
+	}
+	
+	private void setupPhrase() throws Exception {
+		this.mockMvc.perform(delete("/forget/appContext/path"));
+		
+		this.mockMvc
+		.perform(post("/listen").contentType(MediaTypes.HAL_JSON)
+				.content(this.objectMapper.writeValueAsString(phrase)));
+	}
+	
+	@Test
+	public void listenExample() throws Exception {
+		// Remove setup before we test
+		this.mockMvc.perform(delete("/forget/appContext/path"));
+		
+		this.mockMvc
+		.perform(post("/listen").contentType(MediaTypes.HAL_JSON)
+				.content(this.objectMapper.writeValueAsString(phrase)))
+		.andExpect(status().isOk()).andReturn().getResponse().getContentAsString().equals("OK");
 	}
 
-    @Test
-    public void listenExample() throws Exception {
-    		Phrase phrase = new Phrase();
-    		phrase.setAppContext("appContext");
-    		phrase.setResponse(JSON_RESPONSE);
-    		phrase.setUrl("path");
-    		
-        this.mockMvc.perform(post("/listen").contentType(MediaTypes.HAL_JSON).content(this.objectMapper.writeValueAsString(phrase)))
-        		.andExpect(status().isOk()).andReturn().getResponse().getContentAsString().equals("OK");
-        
-    }
+	
+	@Test
+	public void talkExample() throws Exception {
+		this.mockMvc.perform(get("/talk/appContext/path")).andExpect(status().isOk()).andReturn().getResponse()
+				.getContentAsString().equals(JSON_RESPONSE);
+	}
 
-    @Test
-    public void talkExample() throws Exception {
-        this.mockMvc.perform(get("/talk/appContext/path"))
-        		.andExpect(status().isOk()).andReturn().getResponse().getContentAsString().equals(JSON_RESPONSE);
-    }
-    
-    @Test
-    public void healthExample() throws Exception {
-        this.mockMvc.perform(get("/health"))
-        		.andExpect(status().isOk()).andReturn().getResponse().getContentAsString().equals("I'm a healthy parrot, do you have a sunflower seeds for me?");
-    }
+	@Test
+	public void forgetExample() throws Exception {
+		this.mockMvc.perform(delete("/forget/appContext/path")).andExpect(status().isOk());
+	}
+
+	@Test
+	public void forgetNonExistingResourceExample() throws Exception {
+		this.mockMvc.perform(delete("/forget/appContext/pathDoesNotExist")).andExpect(status().isNoContent());
+	}
+
+	@Test
+	public void healthExample() throws Exception {
+		this.mockMvc.perform(get("/health")).andExpect(status().isOk()).andReturn().getResponse().getContentAsString()
+				.equals("I'm a healthy parrot, do you have a sunflower seeds for me?");
+	}
 }

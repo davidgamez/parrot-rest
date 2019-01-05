@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import parrot.rest.common.Phrase;
 
 /**
+ * @author David Gamez
  *
  */
 public abstract class PhraseRepositoryBase  implements PhraseRepository {

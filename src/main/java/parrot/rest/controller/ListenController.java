@@ -1,6 +1,3 @@
-/**
- * 
- */
 package parrot.rest.controller;
 
 import org.slf4j.Logger;

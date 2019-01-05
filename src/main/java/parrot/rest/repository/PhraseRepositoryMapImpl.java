@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import parrot.rest.common.Phrase;
 
 /**
+ * @author David Gamez, Isuru Weerasooriya
  *
  */
 @Component
@@ -30,4 +31,9 @@ public class PhraseRepositoryMapImpl extends PhraseRepositoryBase {
     return map.get(getIdFromUrl(fullUrl));
   }
 
+  @Override
+  public Phrase delete(String fullUrl) {
+	  return map.remove(getIdFromUrl(fullUrl));
+  }
+  
 }
